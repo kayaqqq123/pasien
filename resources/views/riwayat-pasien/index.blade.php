@@ -58,9 +58,7 @@
                                             <td>{{ $row->dokter->nama }}</td>
                                             <td>{{ $row->statuspengobatan()->first()->status}}</td>
                                             <td>{{ $row->diagnosa_penyakit }}</td>
-                                            {{-- @if( $row->status_pengobatan_id == '1') --}}
                                             <td>{{ $row->rawatinap()->first()->kamar ?? ''}}</td>
-                                            {{-- @endif --}}
                                             <td></td>
                                             <td width="25%" style="text-align:center;">
                                                 <a href="{{route('riwayat-pasien.edit', $row->id)}}"
