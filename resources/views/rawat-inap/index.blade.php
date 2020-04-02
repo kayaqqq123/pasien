@@ -43,16 +43,18 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Nomor Kamar</th>
+                                            <th>Kamar</th>
                                             <th>Nama Perawat</th>
+                                            {{-- <th>Status Pengobatan</th> --}}
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse ($rawat as $row)
                                         <tr>
-                                            <td>{{ $row->no_kamar }}</td>
+                                            <td>{{ $row->kamar }}</td>
                                             <td>{{ $row->perawat()->first()->nama}}</td>
+                                            {{-- <td>{{ $row->status_pengobatan->status }}</td> --}}
                                             <td width="25%" style="text-align:center;">
                                                 <a href="{{route('rawat-inap.edit', $row->id)}}"
                                                     class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Update</a>

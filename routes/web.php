@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('/data-perawat', 'PerawatController');
     Route::resource('/status-pengobatan', 'StatusPengobatanController');
     Route::resource('/rawat-inap', 'RawatInapController');
+    Route::get('/kamar','RawatInapController@select_inap')->name('select_kamar');
     Route::resource('/riwayat-pasien', 'RiwayatPasienController');
     Route::get('/home', 'HomeController@index')->name('home');
 

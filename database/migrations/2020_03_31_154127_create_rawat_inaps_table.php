@@ -15,8 +15,9 @@ class CreateRawatInapsTable extends Migration
     {
         Schema::create('rawat_inaps', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('no_kamar');
+            $table->integer('kamar');
             $table->integer('id_perawat');
+            $table->integer('status_pengobatan_id');
             $table->timestamps();
         });
     }

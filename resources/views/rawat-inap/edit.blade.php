@@ -40,11 +40,11 @@
                                 @csrf
                                 <input type="hidden" name="_method" value="PUT">
                                 <div class="form-group">
-                                    <label for="">Nomor Kamar</label>
-                                    <input type="text" name="no_kamar" required
-                                        value="{{ $rawat->no_kamar }}"
-                                        class="form-control {{ $errors->has('no_kamar') ? 'is-invalid':'' }}">
-                                    <p class="text-danger">{{ $errors->first('no_kamar') }}</p>
+                                    <label for="">Kamar</label>
+                                    <input type="text" name="kamar" required
+                                        value="{{ $rawat->kamar }}"
+                                        class="form-control {{ $errors->has('kamar') ? 'is-invalid':'' }}">
+                                    <p class="text-danger">{{ $errors->first('kamar') }}</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Nama Perawat</label>
@@ -58,6 +58,19 @@
                                         @endforeach
                                     </select>
                                     <p class="text-danger">{{ $errors->first('id_perawat') }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Status Pengobatan</label>
+                                    <select name="status_pengobatan_id" id="status_pengobatan_id"
+                                        required class="form-control {{ $errors->has('status_pengobatan_id') ? 'is-invalid':'' }}">
+                                        <option value="">Pilih</option>
+                                        @foreach ($status_pengobatan as $row)
+                                            <option value="{{ $row->id }}" {{ $row->id == $rawat->status_pengobatan_id ? 'selected':'' }}>
+                                                {{ ucfirst($row->nama) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <p class="text-danger">{{ $errors->first('status_pengobatan_id') }}</p>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-info btn-sm">

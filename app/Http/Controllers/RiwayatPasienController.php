@@ -23,7 +23,7 @@ class RiwayatPasienController extends Controller
     $pasien = Pasien::orderBy('nama', 'ASC')->get();
     $dokter = Dokter::orderBy('nama', 'ASC')->get();
     $status_pengobatan = StatusPengobatan::orderBy('status', 'ASC')->get();
-    $rawat = RawatInap::orderBy('no_kamar', 'ASC')->get();
+    $rawat = RawatInap::orderBy('kamar', 'ASC')->get();
     return view('riwayat-pasien.create', compact('pasien', 'dokter', 'status_pengobatan', 'rawat'));
     }
 
@@ -35,16 +35,19 @@ class RiwayatPasienController extends Controller
         'dokter_id' => 'required|exists:dokters,id',
         'status_pengobatan_id' => 'required|exists:status_pengobatans,id',
         'diagnosa_penyakit' => 'required|string|max:100',
-        'rawat_inap_id' => 'required|exists:rawat_inaps,id'
     ]);
     try {
-        $rawatPasien = RiwayatPasien::firstOrCreate([
+        $rawatPasien = RiwayatPasien::create([
                     'pasien_id' => $request->pasien_id,
                     'dokter_id' => $request->dokter_id,
                     'status_pengobatan_id' => $request->status_pengobatan_id,
                     'diagnosa_penyakit' => $request->diagnosa_penyakit,
                     'rawat_inap_id' => $request->rawat_inap_id
         ]);
+
+
+
+
         return redirect(route('riwayat-pasien.index'))
         ->with(['success' => '<strong>' . $rawatPasien->pasien_id . '</strong> Ditambahkan']);
     } catch (\Exception $e) {
@@ -60,7 +63,7 @@ class RiwayatPasienController extends Controller
         $pasien = Pasien::orderBy('nama', 'ASC')->get();
         $dokter = Dokter::orderBy('nama', 'ASC')->get();
         $status_pengobatan = StatusPengobatan::orderBy('status', 'ASC')->get();
-        $rawat = RawatInap::orderBy('no_kamar', 'ASC')->get();
+        $rawat = RawatInap::orderBy('kamar', 'ASC')->get();
         return view('riwayat-pasien.edit', compact('rawatPasien', 'pasien', 'dokter', 'status_pengobatan', 'rawat'));
     }
 
@@ -83,7 +86,7 @@ class RiwayatPasienController extends Controller
                     'diagnosa_penyakit' => $request->diagnosa_penyakit,
                     'rawat_inap_id' => $request->rawat_inap_id
                     ]);
-                    return redirect(route('riwayat-pasien.index'))->with(['success' => 'Dokter:' . $rawatPasien->pasien_id . 'Diupdate']);
+                    return redirect(route('riwayat-pasien.index'))->with(['success' => 'Riwayat Pasien:' . $rawatPasien->pasien_id . 'Diupdate']);
                 } catch (\Exception $e) {
                     return redirect()->back()->with(['error' => $e->getMessage()]);
                 }
@@ -95,5 +98,11 @@ class RiwayatPasienController extends Controller
                 $rawatPasien = RiwayatPasien::findOrFail($id);
                 $rawatPasien->delete();
                 return redirect()->back()->with(['success' => '<strong>' . $rawatPasien->pasien_id . '</strong> Telah Dihapus!']);
+        }
+
+        public function select_inap(Request $id)
+        {
+            $rawatPasien = RiwayatPasien::where('status_pengobatan_id', $id->status_pengobatan)->get()->pluck('kamar');
+            return response()->json($rawatPasien);
         }
 }

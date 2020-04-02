@@ -203,6 +203,12 @@
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src="{{asset('admin/assets/js/demo_1/dashboard.js')}}"></script>
+    <script
+src="https://code.jquery.com/jquery-3.4.1.min.js"
+integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+crossorigin="anonymous"></script>
     <!-- End custom js for this page-->
+
+    @yield('script')
   </body>
 </html>

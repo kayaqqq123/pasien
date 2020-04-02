@@ -92,7 +92,7 @@
                                         <option value="">Pilih</option>
                                         @foreach ($rawat as $row)
                                             <option value="{{ $row->id }}" {{ $row->id == $rawatPasien->rawat_inap_id ? 'selected':'' }}>
-                                                {{ ucfirst($row->no_kamar) }}
+                                                {{ ucfirst($row->kamar) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -113,6 +113,37 @@
             </div>
         </section>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function(){
+            $('#status_pengobatan_id').change(function(){
+                var close = $(this).closest('form');
+                var status_pengobatan = $(this).val();
+                var _token = $(this).closest('form').find('[name="_token"]').val();
+                //alert(_token);
+                if(status_pengobatan == '1'){
+                    $('#rawat_inap_id').closest('.form-group').show();
+                    $.ajax({
+                    method: 'GET',
+                    url: "{{ route('select_kamar') }}?status_pengobatan=" + status_pengobatan,
+                    success: function(result){
+                        console.log(result);
+                        if(result){
+                            $('#rawat_inap_id').empty();
+                            $('#rawat_inap_id').append('<option>==pilih==</option>');
+                            $.each(result,function(key,value){
+                             $('#rawat_inap_id').append('<option value="'+value+'">'+value+'</option>');
+                            });
+                        }
+                    }
+                })
+                }else if(status_pengobatan == '2'){
+                    $('#rawat_inap_id').closest('.form-group').hide();
+                }
+            })
+        })
+    </script>
 @endsection
 
 

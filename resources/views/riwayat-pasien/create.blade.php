@@ -72,7 +72,7 @@
                                     <p class="text-danger">{{ $errors->first('status_pengobatan_id') }}</p>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Diangnosa Penyakit</label>
+                                    <label for="">Diagnosa Penyakit</label>
                                     <input type="text" name="diagnosa_penyakit" required
                                         class="form-control {{ $errors->has('diagnosa_penyakit') ? 'is-invalid':'' }}">
                                     <p class="text-danger">{{ $errors->first('diagnosa_penyakit') }}</p>
@@ -80,16 +80,16 @@
                                 <div class="form-group">
                                     <label for="">Rawat Inap</label>
                                     <select name="rawat_inap_id" id="rawat_inap_id"
-                                        required class="form-control {{ $errors->has('rawat_inap_id') ? 'is-invalid':'' }}">
+                                         class="form-control {{ $errors->has('rawat_inap_id') ? 'is-invalid':'' }}">
                                         <option value="">Pilih</option>
                                         @foreach ($rawat as $row)
-                                            <option value="{{ $row->id }}">{{ ucfirst($row->no_kamar) }}</option>
+                                            <option value="{{ $row->id }}">{{ ucfirst($row->kamar) }}</option>
                                         @endforeach
                                     </select>
                                     <p class="text-danger">{{ $errors->first('rawat_inap_id') }}</p>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary btn-sm">
+                                    <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="fa fa-send"></i> Simpan
                                     </button>
                                 </div>
@@ -103,4 +103,37 @@
             </div>
         </section>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function(){
+            $('#status_pengobatan_id').change(function(){
+                var close = $(this).closest('form');
+                var status_pengobatan = $(this).val();
+                var _token = $(this).closest('form').find('[name="_token"]').val();
+                //alert(_token);
+                if(status_pengobatan == '1'){
+                    $('#rawat_inap_id').show();
+                    $('#rawat_inap_id').closest('.form-group').show();
+                    $.ajax({
+                    method: 'GET',
+                    url: "{{ route('select_kamar') }}?status_pengobatan=" + status_pengobatan,
+                    success: function(result){
+                        console.log(result);
+                        if(result){
+                            $('#rawat_inap_id').empty();
+                            $('#rawat_inap_id').append('<option>==Pilih==</option>');
+                            $.each(result,function(key,value){
+                             $('#rawat_inap_id').append('<option value="'+value+'">'+key+'</option>');
+                            });
+                        }
+                    }
+                })
+                }else if(status_pengobatan == '2'){
+                    $('#rawat_inap_id').hide();
+                    $('#rawat_inap_id').closest('.form-group').hide();
+                }
+            })
+        })
+    </script>
 @endsection
