@@ -68,7 +68,7 @@
               </div>
             </li>
           </ul>
-          <form class="ml-auto search-form d-none d-md-block" action="#">
+          <form class="ml-auto search-form d-none d-md-block" action="/home">
             <div class="form-group">
               <input type="search" class="form-control" placeholder="Search Here">
             </div>
@@ -151,7 +151,7 @@
               </div>
             </li>
             <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
-              <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" id="UserDropdown" href="/home" data-toggle="dropdown" aria-expanded="false">
                 <img class="img-xs rounded-circle" src="{{asset('admin/assets/images/faces/face8.jpg')}}" alt="Profile image"> </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                 <div class="dropdown-header text-center">
@@ -179,6 +179,7 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <!-- Page Title Header Starts-->
+
             @yield('content')
             @include('layouts.module.header')
           <!-- content-wrapper ends -->

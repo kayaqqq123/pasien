@@ -2,7 +2,7 @@
  <nav class="sidebar sidebar-offcanvas" id="sidebar">
      <ul class="nav">
          <li class="nav-item nav-profile">
-             <a href="#" class="nav-link">
+             <a href="/home" class="nav-link">
                  <div class="profile-image">
                      <img class="img-xs rounded-circle" src="{{asset('admin/assets/images/faces/face8.jpg')}}"
                          alt="profile image">
